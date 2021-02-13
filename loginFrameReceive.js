@@ -292,43 +292,29 @@ amqp.connect("amqp://localhost", function (error0, connection) {
           const stopBitFrameSend = tail;
           // console.log("stopBitFrameSend:", stopBitFrameSend);
 
-          const deviceTelemetry = {
+          const deviceTelemetry = JSON.stringify({
             //*? login frame data
             clientAddressData: `${clientAddressLoginFrameSend}`,
             voltageData: voltageLoginFrameSendAnalysis,
-            // ReportingCycle: `${reportingCycleFrameSendAnalysis}`,
             signalData: signalLoginFrameSendAnalysis,
-            // stationNumberFrameData: `${stationNumberFrameSend}`,
             collectingTimeData: `${dateslice}`,
-            // datasectionLoginData: `${datasectionLoginFrameSendAnalysis}`,
-            // workingModeData: `${workingModeFrameSendChoices}`,
-            // meterTypeFrameData: `${meterTypeFrameSendAnalysis}`,
-            // functionCodeLoginFrameData: `${functionCodeLoginFrameSendAnalysis}`,
-            // checkBitParameterFrameData: `${checkBitParameterFrameSend}`,
-            // meterSerialNumberFrameData: `${meterSerialNumberFrameSend}`,
-            // reportingNetworkParameterFrameData: `${reportingNetworkParameterFrameSendBytes}`,
-            // waterMeterQuantityData: `${waterMeterQuantityFrameSendAnalysis}`,
-            // versionNumberData: `${versionNumberFrameSendAnalysis}`,
-            // reportingCycleData: `${reportingCycleFrameSendAnalysis}`,
-            // collectingCycleFrameSendAnalysis: `${collectingCycleFrameSendAnalysis}`,
             reportingNetworkParametersECL: reportingNetworkParameterFrameSendECL,
             reportingNetworkParameterSNR: reportingNetworkParameterFrameSendSNRAnalysis,
             reportingNetworkParameterPCI: reportingNetworkParameterFrameSendPCIAnalysis,
             reportingNetworkParameterEARFCN: reportingNetworkParameterFrameSendEARFCNAnalysis,
-          };
+          });
 
           const deviceTelemetryJson = JSON.stringify(deviceTelemetry, null, 3);
-          const deviceTelemetryJsonProduction = JSON.stringify(deviceTelemetry);
           console.log(deviceTelemetryJson);
           console.log(" [x] Received %s", msg.content.toString());
 
-          if (deviceTelemetryJsonProduction) {
+          if (deviceTelemetry) {
             //**  post to http endpoint
             axios
               .post(
                 "/https://bahari2dev.azurewebsites.net/api/Admin/LoginTelemetry",
                 {
-                  deviceTelemetryJsonProduction
+                  deviceTelemetry,
                 }
                 // {
                 //   headers: {
