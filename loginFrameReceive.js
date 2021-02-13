@@ -340,6 +340,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
               )
               .then(
                 (response) => {
+                  console.log("response data",response.data);
                   console.log("responseData Axios", response.status);
                 },
                 (error) => {
