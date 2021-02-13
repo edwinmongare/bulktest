@@ -177,7 +177,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
             8
           )}:${collectingTimeDataFrameSendAnalysis.slice(8, 10)}`;
 
-          console.log("firtstSlice:", firtstSlice);
+          // console.log("firtstSlice:", firtstSlice);
           // console.log(
           //   "collectingTimeDataFrameSendAnalysis:",
           //   collectingTimeDataFrameSendAnalysis
