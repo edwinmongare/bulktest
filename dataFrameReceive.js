@@ -440,8 +440,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
               .post(
                 "https://bahari2dev.azurewebsites.net/api/Admin/ZonalMeterTelemetry",
                 {
-                  device: "bulkMeter",
-                  data: `${deviceTelemetryJsonProduction}`,
+                  deviceTelemetryJsonProduction
                 }
                 // {
                 //   headers: {
