@@ -163,7 +163,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
           );
           const collectingTimeDataFrameSendAnalysis = `${collectingTimeDataFrameSend}`;
 
-          const finalTimeData = ` 20${collectingTimeDataFrameSendAnalysis.slice(
+          const finalTimeData = `20${collectingTimeDataFrameSendAnalysis.slice(
             0,
             2
           )}-${collectingTimeDataFrameSendAnalysis.slice(
