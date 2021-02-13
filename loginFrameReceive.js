@@ -106,7 +106,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
           // ** Date
           const dateLoginFrameSend = intialPayloadLoginFrameSend.slice(26, 38);
           // console.log("dateLoginFrameSend", dateLoginFrameSend);
-          const dateslice = ` 20${dateLoginFrameSend.slice(
+          const dateslice = `20${dateLoginFrameSend.slice(
             0,
             2
           )}-${dateLoginFrameSend.slice(2, 4)}-${dateLoginFrameSend.slice(
@@ -330,8 +330,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
               .post(
                 "https://bahari2dev.azurewebsites.net/api/Admin/LoginTelemetry",
                 {
-                  device: "bulkMeter",
-                  data: `${deviceTelemetryJsonProduction}`,
+                  deviceTelemetryJsonProduction
                 }
                 // {
                 //   headers: {
