@@ -401,44 +401,30 @@ amqp.connect("amqp://localhost", function (error0, connection) {
           // ** Stop bit
           const stopBitDataFrameSend = tail;
           // console.log("stopBitDataFrameSend:", stopBitDataFrameSend);
-          const deviceTelemetry = {
+          const deviceTelemetry = JSON.stringify({
             //*? data frame data
             clientAddressData: `${clientAddressDataFrameSend}`,
-            // functionCodeData: `${functionCodeDataFrameSendAnalysis}`,
-            // stationNumberData: `${stationNumberDataFrameSend}`,
             alarmCodeData: `${alarmCodeDataFrameSendChoice}`,
-            // collectingTimeData: `${collectingTimeDataFrameSend}`,
             collectingTimeData: `${finalTimeData}`,
-            // datasectionDataFrameData: `${datasectionDataFrameSendAnalysis}`,
-            // totalNumberofFramesData: `${totalNumberofFramesDataFrameSend}`,
-            // whichframeDataFrameSend: `${whichframeDataFrameSend}`,
-            // numberofThisFrameTableData: `${numberofThisFrameTableDataFrameSend}`,
-            // dataCheckData: `${dataCheckDataFrameSend}`,
-            // checkBitCsData: `${checkBitCsDataFrameSend}`,
-            // meterReadingDataIsValidData: `${meterReadingDataIsValidDataFrameSendAnalysis}`,
-            // instantaneousFlowIsNegativeData: `${instantaneousFlowIsNegativeDataFrameSendAnalysis}`,
-            // instantaneousFlowData: instantaneousFlowDataFrameSendAnalysisFinal,
             negativeCummilativeFlowData: negativeCummilativeFlowDataFrameSendAnalysis,
             negativeCummilativeRunningTimeData: negativeCummilativeRunningTimeDataFrameSendAnalysis,
             positiveCumulativeFlowData: positiveCumulativeFlowDataFrameSendAnalysis,
-            // positiveCumulativeRunningTimeData: `${positiveCumulativeRunningTimeDataFrameSendAnalysis}`,
             waterTemperatureData: waterTemperatureDataFrameSendAnalysis,
             pressureData: pressureDataFrameSendAnalysis,
             diagnosticCodeData: `${diagnosticCodeDataFrameSendChoice}`,
-          };
+              });
 
           const deviceTelemetryJson = JSON.stringify(deviceTelemetry, null, 3);
-          const deviceTelemetryJsonProduction = JSON.stringify(deviceTelemetry);
           console.log(deviceTelemetryJson);
           console.log(" [x] Received %s", msg.content.toString());
 
-          if (deviceTelemetryJsonProduction) {
+          if (deviceTelemetry) {
             //**  post to http endpoint
             axios
               .post(
                 "/https://bahari2dev.azurewebsites.net/api/Admin/ZonalMeterTelemetry",
                 {
-                  deviceTelemetryJsonProduction
+                  deviceTelemetry
                 }
                 // {
                 //   headers: {
