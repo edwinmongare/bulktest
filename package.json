@@ -1,0 +1,17 @@
+{
+  "name": "newdecoder",
+  "version": "1.0.0",
+  "description": "Upepo bulkmeter communication and decoding protocol",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "edwin mongare",
+  "license": "ISC",
+  "dependencies": {
+    "amqplib": "^0.6.0",
+    "axios": "^0.21.1",
+    "nodemon": "^2.0.7",
+    "pm2": "^4.5.4"
+  }
+}
