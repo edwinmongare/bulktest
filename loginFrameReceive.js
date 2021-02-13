@@ -106,6 +106,17 @@ amqp.connect("amqp://localhost", function (error0, connection) {
           // ** Date
           const dateLoginFrameSend = intialPayloadLoginFrameSend.slice(26, 38);
           // console.log("dateLoginFrameSend", dateLoginFrameSend);
+          const dateslice = ` 20${dateLoginFrameSend.slice(
+            0,
+            2
+          )}-${dateLoginFrameSend.slice(2, 4)}-${dateLoginFrameSend.slice(
+            4,
+            6
+          )}T${dateLoginFrameSend.slice(6, 8)}:${dateLoginFrameSend.slice(
+            8,
+            10
+          )}`;
+          console.log("dateSlice", dateslice);
 
           // ** Working mode
           const workingModeFrameSend = intialPayloadLoginFrameSend.slice(
@@ -288,7 +299,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
             // ReportingCycle: `${reportingCycleFrameSendAnalysis}`,
             signalData: signalLoginFrameSendAnalysis,
             // stationNumberFrameData: `${stationNumberFrameSend}`,
-            // dateLoginFrameData: `${dateLoginFrameSend}`,
+            collectingTimeData: `${dateslice}`,
             // datasectionLoginData: `${datasectionLoginFrameSendAnalysis}`,
             // workingModeData: `${workingModeFrameSendChoices}`,
             // meterTypeFrameData: `${meterTypeFrameSendAnalysis}`,
