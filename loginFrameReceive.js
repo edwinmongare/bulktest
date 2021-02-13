@@ -323,12 +323,10 @@ amqp.connect("amqp://localhost", function (error0, connection) {
           console.log(" [x] Received %s", msg.content.toString());
 
           if (deviceTelemetryJsonProduction) {
-            const sharesAccessSignature =
-              "SharedAccessSignature sr=testBulkMeterIotHub.azure-devices.net%2Fdevices%2FbulkMeter&sig=V%2B7ts8%2B%2FAePcaID0t8OU%2F18QCVCdBJxqkLU%2FB5ZO6fo%3D&se=7407408997851463";
             //**  post to http endpoint
             axios
               .post(
-                "https://bahari2dev.azurewebsites.net/api/Admin/LoginTelemetry",
+                "/https://bahari2dev.azurewebsites.net/api/Admin/LoginTelemetry",
                 {
                   deviceTelemetryJsonProduction
                 }
@@ -340,7 +338,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
               )
               .then(
                 (response) => {
-                  console.log("response data",response.data);
+                  console.log("responseDataLoginFrame", response.data);
                   console.log("responseData Axios", response.status);
                 },
                 (error) => {
