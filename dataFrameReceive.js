@@ -256,7 +256,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
             56,
             64
           );
-          const negativeCummilativeFlowDataFrameSendAnalysis = ` -${
+          const negativeCummilativeFlowDataFrameSendAnalysis = `-${
             negativeCummilativeFlowDataFrameSend / 10
           }`;
           // console.log(
