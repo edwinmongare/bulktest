@@ -292,7 +292,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
           const stopBitFrameSend = tail;
           // console.log("stopBitFrameSend:", stopBitFrameSend);
 
-          const deviceTelemetry = JSON.stringify({
+          const deviceTelemetry = {
             //*? login frame data
             clientAddressData: `${clientAddressLoginFrameSend}`,
             voltageData: voltageLoginFrameSendAnalysis,
@@ -302,29 +302,37 @@ amqp.connect("amqp://localhost", function (error0, connection) {
             reportingNetworkParameterSNR: reportingNetworkParameterFrameSendSNRAnalysis,
             reportingNetworkParameterPCI: reportingNetworkParameterFrameSendPCIAnalysis,
             reportingNetworkParameterEARFCN: reportingNetworkParameterFrameSendEARFCNAnalysis,
-          });
+          };
 
           const deviceTelemetryJson = JSON.stringify(deviceTelemetry, null, 3);
-          console.log(deviceTelemetryJson);
+          const deviceTelemetryLoginProduction = JSON.stringify(
+            deviceTelemetry
+          );
+          console.log(
+            "production data (login frame): ",
+            deviceTelemetryLoginProduction
+          );
           console.log(" [x] Received %s", msg.content.toString());
 
-          if (deviceTelemetry) {
+          if (deviceTelemetryLoginProduction) {
             //**  post to http endpoint
             axios
               .post(
-                "/https://bahari2dev.azurewebsites.net/api/Admin/LoginTelemetry",
+                "https://bahari2dev.azurewebsites.net/api/Admin/LoginTelemetry",
+                deviceTelemetryLoginProduction,
+
                 {
-                  deviceTelemetry,
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
                 }
-                // {
-                //   headers: {
-                //     Authorization: `${sharesAccessSignature}`,
-                //   },
-                // }
               )
               .then(
                 (response) => {
-                  console.log("responseDataLoginFrame", response.data);
+                  console.log(
+                    "responseDataLoginFrame after post request",
+                    response.data
+                  );
                   console.log("responseData Axios", response.status);
                 },
                 (error) => {

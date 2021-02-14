@@ -256,9 +256,8 @@ amqp.connect("amqp://localhost", function (error0, connection) {
             56,
             64
           );
-          const negativeCummilativeFlowDataFrameSendAnalysis = `-${
-            negativeCummilativeFlowDataFrameSend / 10
-          }`;
+          const negativeCummilativeFlowDataFrameSendAnalysis =
+            negativeCummilativeFlowDataFrameSend / 10;
           // console.log(
           //   "negativeCummilativeFlowDataFrameSend:",
           //   negativeCummilativeFlowDataFrameSend
@@ -401,7 +400,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
           // ** Stop bit
           const stopBitDataFrameSend = tail;
           // console.log("stopBitDataFrameSend:", stopBitDataFrameSend);
-          const deviceTelemetry = JSON.stringify({
+          const deviceTelemetry = {
             //*? data frame data
             clientAddressData: `${clientAddressDataFrameSend}`,
             alarmCodeData: `${alarmCodeDataFrameSendChoice}`,
@@ -412,29 +411,34 @@ amqp.connect("amqp://localhost", function (error0, connection) {
             waterTemperatureData: waterTemperatureDataFrameSendAnalysis,
             pressureData: pressureDataFrameSendAnalysis,
             diagnosticCodeData: `${diagnosticCodeDataFrameSendChoice}`,
-              });
+          };
 
           const deviceTelemetryJson = JSON.stringify(deviceTelemetry, null, 3);
-          console.log(deviceTelemetryJson);
+          const deviceTelemetryDataProduction = JSON.stringify(deviceTelemetry);
+          console.log(
+            "production data (data frame): ",
+            deviceTelemetryDataProduction
+          );
           console.log(" [x] Received %s", msg.content.toString());
 
-          if (deviceTelemetry) {
+          if (deviceTelemetryDataProduction) {
             //**  post to http endpoint
             axios
               .post(
-                "/https://bahari2dev.azurewebsites.net/api/Admin/ZonalMeterTelemetry",
+                "https://bahari2dev.azurewebsites.net/api/Admin/ZonalMeterTelemetry",
+                deviceTelemetryDataProduction,
                 {
-                  deviceTelemetry
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
                 }
-                // {
-                //   headers: {
-                //     Authorization: `${sharesAccessSignature}`,
-                //   },
-                // }
               )
               .then(
                 (response) => {
-                  console.log("responseDataFrame", response.data);
+                  console.log(
+                    "responseDataFrame after post request",
+                    response.data
+                  );
                   console.log("responseData Axios", response.status);
                 },
                 (error) => {
