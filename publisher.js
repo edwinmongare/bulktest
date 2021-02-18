@@ -6,6 +6,10 @@ const loginFrameReply = new Buffer.from(
   "403A00091513146916610100260D0A",
   "hex"
 ).toString("ascii");
+const dataframeReply = new Buffer.from(
+  "403A000B15131469166108010100EC0D0A",
+  "hex"
+).toString("ascii");
 
 amqp.connect("amqp://localhost", function (error0, connection) {
   if (error0) {
@@ -51,6 +55,17 @@ amqp.connect("amqp://localhost", function (error0, connection) {
               if (err) throw err;
               console.log(
                 `UDP message: ${loginFrameReply} bytes: ${bytes} sent to ${remote.address}:${remote.port}`
+              );
+            }
+          );
+          this.send(
+            dataframeReply,
+            remote.port,
+            remote.address,
+            function (err, bytes) {
+              if (err) throw err;
+              console.log(
+                `UDP message dataframe reply: ${dataframeReply} bytes: ${bytes} sent to ${remote.address}:${remote.port}`
               );
             }
           );
