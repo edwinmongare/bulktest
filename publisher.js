@@ -7,7 +7,7 @@ const loginFrameReply = new Buffer.from(
   "hex"
 ).toString("ascii");
 const dataframeReply = new Buffer.from(
-  "403A000B15131469166108010100310D0A",
+  "403A000B15131469166108010200310D0A",
   "hex"
 ).toString("ascii");
 
