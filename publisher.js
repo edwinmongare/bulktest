@@ -3,11 +3,15 @@ const dgram = require("dgram");
 const PORT = 8011;
 const HOST = "0.0.0.0";
 const loginFrameReply = new Buffer.from(
-  "403A00091513146916610100260D0A",
+  "403A0009151314691661010026a0D0A",
   "hex"
 ).toString("ascii");
 const dataframeReply = new Buffer.from(
   "403A000B15131469166108010100310D0A",
+  "hex"
+).toString("ascii");
+const dataframeReplyTwo = new Buffer.from(
+  "403A000B15131469166108010200310D0A",
   "hex"
 ).toString("ascii");
 
@@ -65,7 +69,18 @@ amqp.connect("amqp://localhost", function (error0, connection) {
             function (err, bytes) {
               if (err) throw err;
               console.log(
-                `UDP message dataframe reply: ${dataframeReply} bytes: ${bytes} sent to ${remote.address}:${remote.port}`
+                `UDP message dataframe reply One: ${dataframeReply} bytes: ${bytes} sent to ${remote.address}:${remote.port}`
+              );
+            }
+          );
+          this.send(
+            dataframeReplyTwo,
+            remote.port,
+            remote.address,
+            function (err, bytes) {
+              if (err) throw err;
+              console.log(
+                `UDP message dataframe reply two: ${dataframeReplyTwo} bytes: ${bytes} sent to ${remote.address}:${remote.port}`
               );
             }
           );
