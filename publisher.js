@@ -73,6 +73,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
               );
             }
           );
+          /*
           this.send(
             dataframeReplyTwo,
             remote.port,
@@ -84,6 +85,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
               );
             }
           );
+          */
           const msg = message;
           if (msg.length != 0 && msg.length < "200") {
             channel.assertQueue(queueOne, {
