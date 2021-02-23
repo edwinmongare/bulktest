@@ -67,7 +67,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
                 );
               }
             );
-          } else if (message.length >= 500) {
+          } else if (message.length >= 500 && message.slice(24, 26) == 01) {
             this.send(
               dataframeReply,
               remote.port,
@@ -84,19 +84,19 @@ amqp.connect("amqp://localhost", function (error0, connection) {
                 );
               }
             );
+          } else if (message.length >= 500 && message.slice(24, 26) == 02) {
+            this.send(
+              dataframeReplyTwo,
+              remote.port,
+              remote.address,
+              function (err, bytes) {
+                if (err) throw err;
+                console.log(
+                  `UDP message dataframe reply two: ${dataframeReplyTwo} bytes: ${bytes} sent to ${remote.address}:${remote.port}`
+                );
+              }
+            );
           }
-
-          // this.send(
-          //   dataframeReplyTwo,
-          //   remote.port,
-          //   remote.address,
-          //   function (err, bytes) {
-          //     if (err) throw err;
-          //     console.log(
-          //       `UDP message dataframe reply two: ${dataframeReplyTwo} bytes: ${bytes} sent to ${remote.address}:${remote.port}`
-          //     );
-          //   }
-          // );
           const msg = message;
           if (msg.length != 0 && msg.length < "200") {
             channel.assertQueue(queueOne, {
