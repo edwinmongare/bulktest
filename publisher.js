@@ -67,16 +67,19 @@ amqp.connect("amqp://localhost", function (error0, connection) {
                 );
               }
             );
-          } else if (message.length >= 500 && message.slice(24, 26) == 01) {
+          } else if (message.length >= 500) {
             this.send(
-              dataframeReply,
+              Buffer.from(
+                `403A000B1513146916610801${message.slice(24, 26)}00310D0A`,
+                "hex"
+              ).toString("ascii"),
               remote.port,
               remote.address,
               function (err, bytes) {
                 if (err) throw err;
                 console.log(
                   `Dataframe Reply Sent: ${Buffer.from(
-                    dataframeReply,
+                    ` 403A000B1513146916610801${message.slice(24, 26)}00310D0A`,
                     "ascii"
                   ).toString("hex")}  bytes: ${bytes} sent to ${
                     remote.address
@@ -84,19 +87,20 @@ amqp.connect("amqp://localhost", function (error0, connection) {
                 );
               }
             );
-          } else if (message.length >= 500 && message.slice(24, 26) == 02) {
-            this.send(
-              dataframeReplyTwo,
-              remote.port,
-              remote.address,
-              function (err, bytes) {
-                if (err) throw err;
-                console.log(
-                  `UDP message dataframe reply two: ${dataframeReplyTwo} bytes: ${bytes} sent to ${remote.address}:${remote.port}`
-                );
-              }
-            );
           }
+          //   } else if (message.length >= 500 && message.slice(24, 26) == 02) {
+          //     this.send(
+          //       dataframeReplyTwo,
+          //       remote.port,
+          //       remote.address,
+          //       function (err, bytes) {
+          //         if (err) throw err;
+          //         console.log(
+          //           `UDP message dataframe reply two: ${dataframeReplyTwo} bytes: ${bytes} sent to ${remote.address}:${remote.port}`
+          //         );
+          //       }
+          //     );
+          //   }
           const msg = message;
           if (msg.length != 0 && msg.length < "200") {
             channel.assertQueue(queueOne, {
