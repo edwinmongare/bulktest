@@ -3,7 +3,7 @@ const dgram = require("dgram");
 const PORT = 8011;
 const HOST = "0.0.0.0";
 const loginFrameReply = new Buffer.from(
-  "403A0009151314691661010026a0D0A",
+  "403A0009151314691661010025a0D0A",
   "hex"
 ).toString("ascii");
 const dataframeReply = new Buffer.from(
