@@ -47,43 +47,56 @@ amqp.connect("amqp://localhost", function (error0, connection) {
         "message",
         function (message, remote) {
           console.log(
-            "Data received from client : " +
+            "Data received from bulk meter : " +
               Buffer.from(message, "ascii").toString("hex")
           );
+          if (message.length <= 80) {
+            this.send(
+              loginFrameReply,
+              remote.port,
+              remote.address,
+              function (err, bytes) {
+                if (err) throw err;
+                console.log(
+                  `Login Frame Reply Sent: ${Buffer.from(
+                    loginFrameReply,
+                    "ascii"
+                  ).toString("hex")} bytes: ${bytes} sent to ${
+                    remote.address
+                  }:${remote.port}`
+                );
+              }
+            );
+          } else if (message.length >= 500) {
+            this.send(
+              dataframeReply,
+              remote.port,
+              remote.address,
+              function (err, bytes) {
+                if (err) throw err;
+                console.log(
+                  `Dataframe Reply Sent: ${Buffer.from(
+                    dataframeReply,
+                    "ascii"
+                  ).toString("hex")}  bytes: ${bytes} sent to ${
+                    remote.address
+                  }:${remote.port}`
+                );
+              }
+            );
+          }
 
-          this.send(
-            loginFrameReply,
-            remote.port,
-            remote.address,
-            function (err, bytes) {
-              if (err) throw err;
-              console.log(
-                `UDP message: ${loginFrameReply} bytes: ${bytes} sent to ${remote.address}:${remote.port}`
-              );
-            }
-          );
-          this.send(
-            dataframeReply,
-            remote.port,
-            remote.address,
-            function (err, bytes) {
-              if (err) throw err;
-              console.log(
-                `UDP message dataframe reply One: ${dataframeReply} bytes: ${bytes} sent to ${remote.address}:${remote.port}`
-              );
-            }
-          );
-          this.send(
-            dataframeReplyTwo,
-            remote.port,
-            remote.address,
-            function (err, bytes) {
-              if (err) throw err;
-              console.log(
-                `UDP message dataframe reply two: ${dataframeReplyTwo} bytes: ${bytes} sent to ${remote.address}:${remote.port}`
-              );
-            }
-          );
+          // this.send(
+          //   dataframeReplyTwo,
+          //   remote.port,
+          //   remote.address,
+          //   function (err, bytes) {
+          //     if (err) throw err;
+          //     console.log(
+          //       `UDP message dataframe reply two: ${dataframeReplyTwo} bytes: ${bytes} sent to ${remote.address}:${remote.port}`
+          //     );
+          //   }
+          // );
           const msg = message;
           if (msg.length != 0 && msg.length < "200") {
             channel.assertQueue(queueOne, {
