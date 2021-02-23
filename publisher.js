@@ -79,7 +79,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
                 if (err) throw err;
                 console.log(
                   `Dataframe Reply Sent: ${Buffer.from(
-                    ` 403A000B1513146916610801${message.slice(24, 26)}00310D0A`,
+                    `403A000B1513146916610801${message.slice(24, 26)}00330D0A`,
                     "ascii"
                   ).toString("hex")}  bytes: ${bytes} sent to ${
                     remote.address
