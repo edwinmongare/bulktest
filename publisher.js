@@ -97,7 +97,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
                 );
               }
             );
-          } else if (!sendData) {
+          } else {
             this.send(
               TimeFrameSend,
               remote.port,
