@@ -55,7 +55,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
             "Data received from bulk meter : " +
               Buffer.from(message, "ascii").toString("hex")
           );
-          if (message.length <= 80 && !sendData) {
+          if (message.length <= 80 && sendData) {
             this.send(
               loginFrameReply,
               remote.port,
@@ -72,7 +72,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
                 );
               }
             );
-          } else if (message.length >= 500 && !sendData) {
+          } else if (message.length >= 500 && sendData) {
             // const dataframeReply = new Buffer.from(
             //   `403A000B1513146916610801${message.slice(24, 26)}00310D0A`,
             //   "hex"
@@ -97,7 +97,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
                 );
               }
             );
-          } else if (sendData) {
+          } else if (!sendData) {
             this.send(
               TimeFrameSend,
               remote.port,
