@@ -72,7 +72,10 @@ amqp.connect("amqp://localhost", function (error0, connection) {
                 );
               }
             );
-          } else if (message.length >= 500 && message.slice(24, 26) == "01") {
+          } else if (
+            message.length >= 500 &&
+            Buffer.from(message.slice(24, 26), "ascii").toString("hex") == "01"
+          ) {
             // const dataframeReply = new Buffer.from(
             //   `403A000B1513146916610801${message.slice(24, 26)}00310D0A`,
             //   "hex"
@@ -97,7 +100,10 @@ amqp.connect("amqp://localhost", function (error0, connection) {
                 );
               }
             );
-          } else if (message.length >= 500 && message.slice(24, 26) == "02") {
+          } else if (
+            message.length >= 500 &&
+            Buffer.from(message.slice(24, 26), "ascii").toString("hex") == "02"
+          ) {
             // const dataframeReply = new Buffer.from(
             //   `403A000B1513146916610801${message.slice(24, 26)}00310D0A`,
             //   "hex"
