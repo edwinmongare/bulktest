@@ -7,7 +7,7 @@ const loginFrameReply = new Buffer.from(
   "hex"
 ).toString("ascii");
 const TimeFrameSend = new Buffer.from(
-  "403AFF011513146916610921022307151600890D0A",
+  "403A000B15131469166108010100310D0A",
   "hex"
 ).toString("ascii");
 const dataframeReply = new Buffer.from(
@@ -73,8 +73,8 @@ amqp.connect("amqp://localhost", function (error0, connection) {
               }
             );
           } else if (
-            message.length >= 500 &&
-            Buffer.from(message.slice(24, 26), "hex").toString("ascii") == "01"
+            message.length > 500 &&
+            Buffer.from(message.slice(24, 26), "ascii").toString("hex") == "01"
           ) {
             // const dataframeReply = new Buffer.from(
             //   `403A000B1513146916610801${message.slice(24, 26)}00310D0A`,
@@ -101,8 +101,8 @@ amqp.connect("amqp://localhost", function (error0, connection) {
               }
             );
           } else if (
-            message.length >= 500 &&
-            Buffer.from(message.slice(24, 26), "hex").toString("ascii") == "02"
+            message.length > 500 &&
+            Buffer.from(message.slice(24, 26), "ascii").toString("hex") == "02"
           ) {
             // const dataframeReply = new Buffer.from(
             //   `403A000B1513146916610801${message.slice(24, 26)}00310D0A`,
@@ -128,24 +128,23 @@ amqp.connect("amqp://localhost", function (error0, connection) {
                 );
               }
             );
-          } else {
-            await this.send(
-              TimeFrameSend,
-              remote.port,
-              remote.address,
-              function (err, bytes) {
-                if (err) throw err;
-                console.log(
-                  `Time Frame Reply Sent: ${Buffer.from(
-                    TimeFrameSend,
-                    "ascii"
-                  ).toString("hex")} bytes: ${bytes} sent to ${
-                    remote.address
-                  }:${remote.port}`
-                );
-              }
-            );
           }
+          await this.send(
+            TimeFrameSend,
+            remote.port,
+            remote.address,
+            function (err, bytes) {
+              if (err) throw err;
+              console.log(
+                `Time Frame Reply Sent: ${Buffer.from(
+                  TimeFrameSend,
+                  "ascii"
+                ).toString("hex")} bytes: ${bytes} sent to ${remote.address}:${
+                  remote.port
+                }`
+              );
+            }
+          );
 
           //   } else if (message.length >= 500 && message.slice(24, 26) == 02) {
           //     this.send(
