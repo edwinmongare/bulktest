@@ -56,7 +56,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
               Buffer.from(message, "ascii").toString("hex")
           );
           if (message.length <= 80) {
-            await this.send(
+            this.send(
               loginFrameReply,
               remote.port,
               remote.address,
