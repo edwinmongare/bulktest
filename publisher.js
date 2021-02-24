@@ -50,13 +50,13 @@ amqp.connect("amqp://localhost", function (error0, connection) {
 
       server[i].on(
         "message",
-        function (message, remote) {
+        async function (message, remote) {
           console.log(
             "Data received from bulk meter : " +
               Buffer.from(message, "ascii").toString("hex")
           );
           if (message.length <= 80) {
-            this.send(
+            await this.send(
               loginFrameReply,
               remote.port,
               remote.address,
@@ -81,7 +81,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
               "403A000B15131469166108010100310D0A",
               "hex"
             ).toString("ascii");
-            this.send(
+            await this.send(
               dataframeReply,
               remote.port,
               remote.address,
@@ -98,10 +98,8 @@ amqp.connect("amqp://localhost", function (error0, connection) {
               }
             );
           } else {
-            this.send(
-              setTimeout(function () {
-                TimeFrameSend;
-              }, 5000),
+            await this.send(
+              TimeFrameSend,
               remote.port,
               remote.address,
               function (err, bytes) {
