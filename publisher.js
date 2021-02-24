@@ -7,7 +7,7 @@ const loginFrameReply = new Buffer.from(
   "hex"
 ).toString("ascii");
 const TimeFrameSend = new Buffer.from(
-  "403A000F1513146916610921022307151600890D0A",
+  "403AFF011513146916610921022307151600890D0A",
   "hex"
 ).toString("ascii");
 // const dataframeReply = new Buffer.from(
@@ -55,7 +55,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
             "Data received from bulk meter : " +
               Buffer.from(message, "ascii").toString("hex")
           );
-          if (message.length <= 80 && sendData) {
+          if (message.length <= 80) {
             this.send(
               loginFrameReply,
               remote.port,
@@ -72,7 +72,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
                 );
               }
             );
-          } else if (message.length >= 500 && sendData) {
+          } else if (message.length >= 500) {
             // const dataframeReply = new Buffer.from(
             //   `403A000B1513146916610801${message.slice(24, 26)}00310D0A`,
             //   "hex"
@@ -99,7 +99,9 @@ amqp.connect("amqp://localhost", function (error0, connection) {
             );
           } else {
             this.send(
-              TimeFrameSend,
+              setTimeout(function () {
+                TimeFrameSend;
+              }, 5000),
               remote.port,
               remote.address,
               function (err, bytes) {
