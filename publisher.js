@@ -7,7 +7,7 @@ const loginFrameReply = new Buffer.from(
   "hex"
 ).toString("ascii");
 const TimeFrameSend = new Buffer.from(
-  "403A000B15131469166108010100310D0A",
+  "403AFF011513146916610921022307151600890D0A",
   "hex"
 ).toString("ascii");
 // const dataframeReply = new Buffer.from(
@@ -115,7 +115,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
                 );
               }
             );
-          }, 5000);
+          }, 6000);
 
           //   } else if (message.length >= 500 && message.slice(24, 26) == 02) {
           //     this.send(
