@@ -104,26 +104,22 @@ amqp.connect("amqp://localhost", function (error0, connection) {
               "ascii"
             ).toString("hex");
             console.log("timeSliceSend", timeSliceSend);
+            const checkbitcsTime = parseFloat("89", 16);
+            console.log(checkbitcsTime, "checkbitcsTime");
             this.send(
-              (dataSentTime = new Buffer.from(
-                `403A000F15131469166109${timeSliceSend}00890D0A`,
-                "hex"
-              ).toString("ascii")),
+              (dataSentTime =
+                //403A000F15131469166109${timeSliceSend}00890D0A
+                `403A000F15131469166109${timeSliceSend}00${checkbitcsTime}0D0A`),
               remote.port,
               remote.address,
               function (err, bytes) {
                 if (err) throw err;
                 console.log(
-                  `Time Frame Reply Sent: ${Buffer.from(
-                    dataSentTime,
-                    "ascii"
-                  ).toString("hex")} bytes: ${bytes} sent to ${
-                    remote.address
-                  }:${remote.port}`
+                  `Time Frame Reply Sent: ${dataSentTime} bytes: ${bytes} sent to ${remote.address}:${remote.port}`
                 );
               }
             );
-          }, 6000);
+          }, 1000);
 
           //   } else if (message.length >= 500 && message.slice(24, 26) == 02) {
           //     this.send(
