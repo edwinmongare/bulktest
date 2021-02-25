@@ -85,7 +85,14 @@ amqp.connect("amqp://localhost", function (error0, connection) {
             //   "hex"
             // ).toString("ascii");
             await this.send(
-              (dataSent = `403A000B1513146916610801${dataframereplyPart}00310D0A`),
+              // const dataframeReply = new Buffer.from(
+              //   "403A000B15131469166108010100310D0A",
+              //   "hex"
+              // ).toString("ascii");
+              (dataSent = new Buffer.from(
+                `403A000B1513146916610801${dataframereplyPart}00310D0A`,
+                "hex"
+              ).toString("ascii")),
               remote.port,
               remote.address,
               function (err, bytes) {
