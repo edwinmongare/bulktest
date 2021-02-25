@@ -73,9 +73,10 @@ amqp.connect("amqp://localhost", function (error0, connection) {
               }
             );
           } else if (message.length > 500) {
-            const asciiToHex = Buffer.from(message, "ascii").toString("hex");
-            const dataframereplyPart = asciiToHex.slice(24, 26);
-            console.log("dataframereplyPart", dataframereplyPart);
+            let dataframereplyPart = Buffer.from(
+              message.slice(24, 26),
+              "ascii"
+            ).toString("hex");
 
             await this.send(
               (dataSent = new Buffer.from(
@@ -96,8 +97,9 @@ amqp.connect("amqp://localhost", function (error0, connection) {
                 );
               }
             );
-          } else {
-            await this.send(
+          }
+          setTimeout(function () {
+            this.send(
               TimeFrameSend,
               remote.port,
               remote.address,
@@ -113,7 +115,8 @@ amqp.connect("amqp://localhost", function (error0, connection) {
                 );
               }
             );
-          }
+          }, 7000);
+
           //   } else if (message.length >= 500 && message.slice(24, 26) == 02) {
           //     this.send(
           //       dataframeReplyTwo,
