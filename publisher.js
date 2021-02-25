@@ -72,10 +72,11 @@ amqp.connect("amqp://localhost", function (error0, connection) {
                 );
               }
             );
-          } else if (
-            (await message.length) > 500 &&
-            Buffer.from(message.slice(24, 26), "ascii").toString("hex") == "01"
-          ) {
+          } else if (message.length > 500) {
+            let dataframereplyPart = Buffer.from(
+              message.slice(24, 26),
+              "ascii"
+            ).toString("hex");
             // const dataframeReply = new Buffer.from(
             //   `403A000B1513146916610801${message.slice(24, 26)}00310D0A`,
             //   "hex"
@@ -85,35 +86,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
             //   "hex"
             // ).toString("ascii");
             await this.send(
-              dataframeReply,
-              remote.port,
-              remote.address,
-              function (err, bytes) {
-                if (err) throw err;
-                console.log(
-                  `Data Frame One Reply Sent: ${Buffer.from(
-                    dataframeReply,
-                    "ascii"
-                  ).toString("hex")} bytes: ${bytes} sent to ${
-                    remote.address
-                  }:${remote.port}`
-                );
-              }
-            );
-          } else if (
-            (await message.length) > 500 &&
-            Buffer.from(message.slice(24, 26), "ascii").toString("hex") == "02"
-          ) {
-            // const dataframeReply = new Buffer.from(
-            //   `403A000B1513146916610801${message.slice(24, 26)}00310D0A`,
-            //   "hex"
-            // ).toString("ascii");
-            // const dataframeReply = new Buffer.from(
-            //   "403A000B15131469166108010100310D0A",
-            //   "hex"
-            // ).toString("ascii");
-            await this.send(
-              dataframeReplyTwo,
+              `403A000B1513146916610801${dataframereplyPart}00310D0A`,
               remote.port,
               remote.address,
               function (err, bytes) {
