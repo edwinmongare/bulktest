@@ -10,15 +10,14 @@ const TimeFrameSend = new Buffer.from(
   "403A000B15131469166108010100310D0A",
   "hex"
 ).toString("ascii");
-const dataframeReply = new Buffer.from(
-  "403A000B15131469166108010100310D0A",
-  "hex"
-).toString("ascii");
-const dataframeReplyTwo = new Buffer.from(
-  "403A000B15131469166108010200310D0A",
-  "hex"
-).toString("ascii");
-let sendData = true;
+// const dataframeReply = new Buffer.from(
+//   "403A000B15131469166108010100310D0A",
+//   "hex"
+// ).toString("ascii");
+// const dataframeReplyTwo = new Buffer.from(
+//   "403A000B15131469166108010200310D0A",
+//   "hex"
+// ).toString("ascii");
 
 amqp.connect("amqp://localhost", function (error0, connection) {
   if (error0) {
@@ -86,31 +85,14 @@ amqp.connect("amqp://localhost", function (error0, connection) {
             //   "hex"
             // ).toString("ascii");
             await this.send(
-              `403A000B1513146916610801${dataframereplyPart}00310D0A`,
+              (dataSent = `403A000B1513146916610801${dataframereplyPart}00310D0A`),
               remote.port,
               remote.address,
               function (err, bytes) {
                 if (err) throw err;
                 console.log(
-                  `Data Frame Two Reply Sent: ${Buffer.from(
-                    dataframeReply,
-                    "ascii"
-                  ).toString("hex")} bytes: ${bytes} sent to ${
-                    remote.address
-                  }:${remote.port}`
-                );
-              }
-            );
-          } else {
-            await this.send(
-              TimeFrameSend,
-              remote.port,
-              remote.address,
-              function (err, bytes) {
-                if (err) throw err;
-                console.log(
-                  `Time Frame Reply Sent: ${Buffer.from(
-                    TimeFrameSend,
+                  `Data Frame Reply Sent: ${Buffer.from(
+                    dataSent,
                     "ascii"
                   ).toString("hex")} bytes: ${bytes} sent to ${
                     remote.address
@@ -119,6 +101,22 @@ amqp.connect("amqp://localhost", function (error0, connection) {
               }
             );
           }
+          await this.send(
+            TimeFrameSend,
+            remote.port,
+            remote.address,
+            function (err, bytes) {
+              if (err) throw err;
+              console.log(
+                `Time Frame Reply Sent: ${Buffer.from(
+                  TimeFrameSend,
+                  "ascii"
+                ).toString("hex")} bytes: ${bytes} sent to ${remote.address}:${
+                  remote.port
+                }`
+              );
+            }
+          );
 
           //   } else if (message.length >= 500 && message.slice(24, 26) == 02) {
           //     this.send(
