@@ -98,16 +98,24 @@ amqp.connect("amqp://localhost", function (error0, connection) {
               }
             );
           }
-          setTimeout(() => {
+          setTimeout(async () => {
+            let timeSliceSend = new Buffer.from(
+              message.slice(17, 22),
+              "ascii"
+            ).toString("hex");
+            console.log("timeSliceSend", timeSliceSend);
             this.send(
-              TimeFrameSend,
+              (dataSentTime = new Buffer.from(
+                `403A000F15131469166109${timeSliceSend}00890D0A`,
+                "hex"
+              ).toString("ascii")),
               remote.port,
               remote.address,
               function (err, bytes) {
                 if (err) throw err;
                 console.log(
                   `Time Frame Reply Sent: ${Buffer.from(
-                    TimeFrameSend,
+                    dataSentTime,
                     "ascii"
                   ).toString("hex")} bytes: ${bytes} sent to ${
                     remote.address
