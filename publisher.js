@@ -119,7 +119,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
                 );
               }
             );
-          }, 1000);
+          }, 7000);
 
           //   } else if (message.length >= 500 && message.slice(24, 26) == 02) {
           //     this.send(
