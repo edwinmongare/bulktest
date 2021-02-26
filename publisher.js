@@ -108,7 +108,8 @@ amqp.connect("amqp://localhost", function (error0, connection) {
               await this.send(
                 (dataSentTime =
                   //403A000F15131469166109${timeSliceSend}00890D0A
-                  `403A000F15131469166109${timeSliceSend}00${checkbitcsTime}0D0A`),
+                  "403A000F151314691661092142605150100890D0A"),
+                // `403A000F15131469166109${timeSliceSend}00${checkbitcsTime}0D0A`),
                 remote.port,
                 remote.address,
                 function (err, bytes) {
