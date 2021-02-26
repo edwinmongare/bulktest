@@ -74,10 +74,10 @@ amqp.connect("amqp://localhost", function (error0, connection) {
             );
           } else if (message.length > 500) {
             let dataframereplyPart = Buffer.from(
-              message.slice(24, 26),
+              message.slice(12, 13),
               "ascii"
             ).toString("hex");
-
+            console.log(dataframereplyPart, "dataframereplyPart");
             await this.send(
               (dataSent = new Buffer.from(
                 `403A000B1513146916610801${dataframereplyPart}00310D0A`,
@@ -118,7 +118,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
                   );
                 }
               );
-            }, 1000);
+            }, 4000);
           }
           //   } else if (message.length >= 500 && message.slice(24, 26) == 02) {
           //     this.send(
