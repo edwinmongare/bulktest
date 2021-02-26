@@ -98,7 +98,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
               }
             );
             for (let j = 0; j < 1; j++) {
-              setTimeout[i](async () => {
+              setTimeout(async () => {
                 let timeSliceSend = new Buffer.from(
                   message.slice(17, 22),
                   "ascii"
