@@ -55,9 +55,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
             "Data received from bulk meter : " +
               Buffer.from(message, "ascii").toString("hex")
           );
-          const eeke = message.slice(20, 22);
-          console.log(eeke);
-          if (message.slice(20, 22) == "01") {
+          if (message.length <= 80) {
             await this.send(
               loginFrameReply,
               remote.port,
@@ -74,7 +72,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
                 );
               }
             );
-          } else if (message.slice(20, 22) == "08") {
+          } else if (message.length > 100) {
             let dataframereplyPart = Buffer.from(
               message.slice(12, 13),
               "ascii"
@@ -183,22 +181,22 @@ amqp.connect("amqp://localhost", function (error0, connection) {
           //     );
           //   }
           const msg = message;
-          if (msg.length != 0 && msg.slice(20, 22) == "01") {
+          if (msg.length != 0 && msg.length < "200") {
             channel.assertQueue(queueOne, {
               durable: false,
             });
-          } else if (msg.length != 0 && msg.slice(20, 22) == "08") {
+          } else {
             channel.assertQueue(queueTwo, {
               durable: false,
             });
           }
 
-          if (msg.length != 0 && msg.slice(20, 22) == "01") {
+          if (msg.length != 0 && msg.length < "200") {
             channel.sendToQueue(queueOne, Buffer.from(msg));
-          } else if (msg.length != 0 && msg.slice(20, 22) == "08") {
+          } else {
             channel.sendToQueue(queueTwo, Buffer.from(msg));
           }
-          console.log(" message sent to  :", msg, "message length", msg.length);
+          console.log(" message sent to :", msg, "message length", msg.length);
         }.bind(server[i])
       );
       server[i].bind(PORT + i, HOST);
