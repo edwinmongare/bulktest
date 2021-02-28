@@ -80,45 +80,66 @@ amqp.connect("amqp://localhost", function (error0, connection) {
 
             let checkbit = dataframereplyPart.slice(1, 2);
 
-            await this.send(
-              (dataSent = new Buffer.from(
-                `403A000B1513146916610801${dataframereplyPart}003${checkbit}0D0A`,
-                "hex"
-              ).toString("ascii")),
-              remote.port,
-              remote.address,
-              function (err, bytes) {
-                if (err) throw err;
-                console.log(
-                  `Data Frame Reply Sent: ${Buffer.from(
-                    dataSent,
-                    "ascii"
-                  ).toString("hex")} bytes: ${bytes} sent to ${
-                    remote.address
-                  }:${remote.port}`
-                );
-              }
-            );
-
-            await this.send(
-              (dataSent = new Buffer.from(
-                `403A000B1513146916610801${dataframereplyPart}00320D0A`,
-                "hex"
-              ).toString("ascii")),
-              remote.port,
-              remote.address,
-              function (err, bytes) {
-                if (err) throw err;
-                console.log(
-                  `Data Frame Reply Sent: ${Buffer.from(
-                    dataSent,
-                    "ascii"
-                  ).toString("hex")} bytes: ${bytes} sent to ${
-                    remote.address
-                  }:${remote.port}`
-                );
-              }
-            );
+            if (checkbit == "0") {
+              await this.send(
+                (dataSent = new Buffer.from(
+                  `403A000B1513146916610801${dataframereplyPart}004${checkbit}0D0A`,
+                  "hex"
+                ).toString("ascii")),
+                remote.port,
+                remote.address,
+                function (err, bytes) {
+                  if (err) throw err;
+                  console.log(
+                    `Data Frame Reply Sent: ${Buffer.from(
+                      dataSent,
+                      "ascii"
+                    ).toString("hex")} bytes: ${bytes} sent to ${
+                      remote.address
+                    }:${remote.port}`
+                  );
+                }
+              );
+            } else {
+              await this.send(
+                (dataSent = new Buffer.from(
+                  `403A000B1513146916610801${dataframereplyPart}003${checkbit}0D0A`,
+                  "hex"
+                ).toString("ascii")),
+                remote.port,
+                remote.address,
+                function (err, bytes) {
+                  if (err) throw err;
+                  console.log(
+                    `Data Frame Reply Sent: ${Buffer.from(
+                      dataSent,
+                      "ascii"
+                    ).toString("hex")} bytes: ${bytes} sent to ${
+                      remote.address
+                    }:${remote.port}`
+                  );
+                }
+              );
+            }
+            // await this.send(
+            //   (dataSent = new Buffer.from(
+            //     `403A000B1513146916610801${dataframereplyPart}00320D0A`,
+            //     "hex"
+            //   ).toString("ascii")),
+            //   remote.port,
+            //   remote.address,
+            //   function (err, bytes) {
+            //     if (err) throw err;
+            //     console.log(
+            //       `Data Frame Reply Sent: ${Buffer.from(
+            //         dataSent,
+            //         "ascii"
+            //       ).toString("hex")} bytes: ${bytes} sent to ${
+            //         remote.address
+            //       }:${remote.port}`
+            //     );
+            //   }
+            // );
 
             // for (let j = 0; j < 1; j++) {
             //   setTimeout(async () => {
