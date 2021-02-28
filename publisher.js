@@ -72,7 +72,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
                 );
               }
             );
-          } else if (message.length > 200) {
+          } else if (message.length > 100) {
             let dataframereplyPart = Buffer.from(
               message.slice(12, 13),
               "ascii"
