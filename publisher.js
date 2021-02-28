@@ -78,25 +78,48 @@ amqp.connect("amqp://localhost", function (error0, connection) {
               "ascii"
             ).toString("hex");
             // console.log(dataframereplyPart, "dataframereplyPart");
-            await this.send(
-              (dataSent = new Buffer.from(
-                `403A000B1513146916610801${dataframereplyPart}00310D0A`,
-                "hex"
-              ).toString("ascii")),
-              remote.port,
-              remote.address,
-              function (err, bytes) {
-                if (err) throw err;
-                console.log(
-                  `Data Frame Reply Sent: ${Buffer.from(
-                    dataSent,
-                    "ascii"
-                  ).toString("hex")} bytes: ${bytes} sent to ${
-                    remote.address
-                  }:${remote.port}`
-                );
-              }
-            );
+            if (dataframereplyPart == "01") {
+              await this.send(
+                (dataSent = new Buffer.from(
+                  `403A000B1513146916610801${dataframereplyPart}00310D0A`,
+                  "hex"
+                ).toString("ascii")),
+                remote.port,
+                remote.address,
+                function (err, bytes) {
+                  if (err) throw err;
+                  console.log(
+                    `Data Frame Reply Sent: ${Buffer.from(
+                      dataSent,
+                      "ascii"
+                    ).toString("hex")} bytes: ${bytes} sent to ${
+                      remote.address
+                    }:${remote.port}`
+                  );
+                }
+              );
+            } else if (dataframereplyPart == "02") {
+              await this.send(
+                (dataSent = new Buffer.from(
+                  `403A000B1513146916610801${dataframereplyPart}00320D0A`,
+                  "hex"
+                ).toString("ascii")),
+                remote.port,
+                remote.address,
+                function (err, bytes) {
+                  if (err) throw err;
+                  console.log(
+                    `Data Frame Reply Sent: ${Buffer.from(
+                      dataSent,
+                      "ascii"
+                    ).toString("hex")} bytes: ${bytes} sent to ${
+                      remote.address
+                    }:${remote.port}`
+                  );
+                }
+              );
+            }
+
             for (let j = 0; j < 1; j++) {
               setTimeout(async () => {
                 let timeSliceSend = new Buffer.from(
