@@ -120,31 +120,31 @@ amqp.connect("amqp://localhost", function (error0, connection) {
               }
             );
 
-            for (let j = 0; j < 1; j++) {
-              setTimeout(async () => {
-                let timeSliceSend = new Buffer.from(
-                  message.slice(17, 22),
-                  "ascii"
-                ).toString("hex");
-                // console.log("timeSliceSend", timeSliceSend);
-                const checkbitcsTime = parseFloat("89", 16);
-                // console.log(checkbitcsTime, "checkbitcsTime");
-                await this.send(
-                  (dataSentTime =
-                    //403A000F15131469166109${timeSliceSend}00890D0A
-                    // "403A000F151314691661092142605150100890D0A"),
-                    `403A000F15131469166109${timeSliceSend}00${checkbitcsTime}0D0A`),
-                  remote.port,
-                  remote.address,
-                  function (err, bytes) {
-                    if (err) throw err;
-                    console.log(
-                      `Time Frame Reply Sent: ${dataSentTime} bytes: ${bytes} sent to ${remote.address}:${remote.port}`
-                    );
-                  }
-                );
-              }, 6000);
-            }
+            // for (let j = 0; j < 1; j++) {
+            //   setTimeout(async () => {
+            //     let timeSliceSend = new Buffer.from(
+            //       message.slice(17, 22),
+            //       "ascii"
+            //     ).toString("hex");
+            //     // console.log("timeSliceSend", timeSliceSend);
+            //     const checkbitcsTime = parseFloat("89", 16);
+            //     // console.log(checkbitcsTime, "checkbitcsTime");
+            //     await this.send(
+            //       (dataSentTime =
+            //         //403A000F15131469166109${timeSliceSend}00890D0A
+            //         // "403A000F151314691661092142605150100890D0A"),
+            //         `403A000F15131469166109${timeSliceSend}00${checkbitcsTime}0D0A`),
+            //       remote.port,
+            //       remote.address,
+            //       function (err, bytes) {
+            //         if (err) throw err;
+            //         console.log(
+            //           `Time Frame Reply Sent: ${dataSentTime} bytes: ${bytes} sent to ${remote.address}:${remote.port}`
+            //         );
+            //       }
+            //     );
+            //   }, 6000);
+            // }
           }
           //   } else if (message.length >= 500 && message.slice(24, 26) == 02) {
           //     this.send(
