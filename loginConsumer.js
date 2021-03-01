@@ -34,6 +34,10 @@ amqp.connect("amqp://localhost", function (error0, connection) {
           const intialPayloadLoginFrameSend = Buffer.from(
             msg.content
           ).toString();
+          console.log(
+            intialPayloadLoginFrameSend,
+            "intialPayloadLoginFrameSend"
+          );
           // console.log(intialPayloadLoginFrameSend.length);
           // ** start bit
           const startbitLoginFrameSend = header;
@@ -115,7 +119,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
             8,
             10
           )}`;
-          console.log("dateSlice", dateslice);
+          // console.log("dateSlice", dateslice);
 
           // ** Working mode
           const workingModeFrameSend = intialPayloadLoginFrameSend.slice(
@@ -317,7 +321,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
             //**  post to http endpoint
             axios
               .post(
-                "https://bahari2dev.azurewebsites.net/api/Admin/LoginTelemetry",
+                "https://tbahari2dev.azurewebsites.net/api/Admin/LoginTelemetry",
                 deviceTelemetryLoginProduction,
 
                 {
