@@ -185,7 +185,6 @@ amqp.connect("amqp://localhost", function (error0, connection) {
           //     );
           //   }
           const msg = messageData;
-          console.log(msg.slice(20, 22), "fefefeefe");
           if (msg.slice(20, 22) == 01) {
             channel.assertQueue(queueOne, {
               durable: true,
