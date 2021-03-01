@@ -28,8 +28,8 @@ amqp.connect("amqp://localhost", function (error0, connection) {
     if (error1) {
       throw error1;
     }
-    const queueOne = "loginframeQueue";
-    const queueTwo = "dataframeQueue";
+    const queueOne = "loginframe";
+    const queueTwo = "dataframe";
     const server = [];
     for (let i = 0; i < 1; i++) {
       server[i] = dgram.createSocket("udp4");
@@ -55,7 +55,9 @@ amqp.connect("amqp://localhost", function (error0, connection) {
             "Data received from bulk meter : " +
               Buffer.from(message, "ascii").toString("hex")
           );
-          if (message.length <= 80) {
+          const messageData = Buffer.from(message, "ascii").toString("hex");
+
+          if (messageData.slice(20, 22) == 01) {
             await this.send(
               loginFrameReply,
               remote.port,
@@ -72,9 +74,9 @@ amqp.connect("amqp://localhost", function (error0, connection) {
                 );
               }
             );
-          } else if (message.length > 100) {
+          } else if (messageData.slice(20, 22) == 08) {
             let dataframereplyPart = Buffer.from(
-              message.slice(12, 13),
+              messageData.slice(12, 13),
               "ascii"
             ).toString("hex");
 
@@ -166,6 +168,8 @@ amqp.connect("amqp://localhost", function (error0, connection) {
             //     );
             //   }, 6000);
             // }
+          } else {
+            console.log("function code not 08 or 01");
           }
           //   } else if (message.length >= 500 && message.slice(24, 26) == 02) {
           //     this.send(
@@ -180,23 +184,26 @@ amqp.connect("amqp://localhost", function (error0, connection) {
           //       }
           //     );
           //   }
-          const msg = message;
-          if (msg.length != 0 && msg.length < "200") {
+          const msg = messageData;
+          console.log(msg.slice(20, 22), "fefefeefe");
+          if (msg.slice(20, 22) == 01) {
             channel.assertQueue(queueOne, {
-              durable: false,
+              durable: true,
             });
-          } else {
+          } else if (msg.slice(20, 22) == 08) {
             channel.assertQueue(queueTwo, {
-              durable: false,
+              durable: true,
             });
           }
 
-          if (msg.length != 0 && msg.length < "200") {
+          if (msg.slice(20, 22) == 01) {
             channel.sendToQueue(queueOne, Buffer.from(msg));
-          } else {
+          } else if (msg.slice(20, 22) == 08) {
             channel.sendToQueue(queueTwo, Buffer.from(msg));
+          } else {
+            console.log("msg slice not 01 or 08");
           }
-          console.log(" message sent to :", msg, "message length", msg.length);
+          console.log(" message sent to  :", msg, "message length", msg.length);
         }.bind(server[i])
       );
       server[i].bind(PORT + i, HOST);
