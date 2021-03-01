@@ -76,12 +76,11 @@ amqp.connect("amqp://localhost", function (error0, connection) {
             );
           } else if (messageData.slice(20, 22) == 08) {
             let dataframereplyPart = Buffer.from(
-              messageData.slice(12, 13),
-              "ascii"
-            ).toString("hex");
-
+              messageData.slice(12, 13)
+            ).toString();
+            console.log(dataframereplyPart, "dataframereplyPart");
             let checkbit = dataframereplyPart.slice(1, 2);
-
+            console.log(checkbit, "checkbit");
             if (checkbit == "0") {
               await this.send(
                 (dataSent = new Buffer.from(
