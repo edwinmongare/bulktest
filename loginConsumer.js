@@ -31,9 +31,9 @@ amqp.connect("amqp://localhost", function (error0, connection) {
         } else {
           // ** intial payload Login Frame (send) message
 
-          const intialPayloadLoginFrameSend = Buffer.from(msg.content).toString(
-            "hex"
-          );
+          const intialPayloadLoginFrameSend = Buffer.from(
+            msg.content
+          ).toString();
           // console.log(intialPayloadLoginFrameSend.length);
           // ** start bit
           const startbitLoginFrameSend = header;
