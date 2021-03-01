@@ -34,10 +34,10 @@ amqp.connect("amqp://localhost", function (error0, connection) {
           const intialPayloadLoginFrameSend = Buffer.from(
             msg.content
           ).toString();
-          console.log(
-            intialPayloadLoginFrameSend,
-            "intialPayloadLoginFrameSend"
-          );
+          // console.log(
+          //   intialPayloadLoginFrameSend,
+          //   "intialPayloadLoginFrameSend"
+          // );
           // console.log(intialPayloadLoginFrameSend.length);
           // ** start bit
           const startbitLoginFrameSend = header;
@@ -315,13 +315,13 @@ amqp.connect("amqp://localhost", function (error0, connection) {
             "production data (login frame): ",
             deviceTelemetryLoginProduction
           );
-          console.log(" [x] Received %s", msg.content.toString());
+          // console.log(" [x] Received %s", msg.content.toString());
 
           if (deviceTelemetryLoginProduction) {
             //**  post to http endpoint
             axios
               .post(
-                "https://bahari2dev.azurewebsites.net/api/Admin/LoginTelemetry",
+                "https://tbahari2dev.azurewebsites.net/api/Admin/LoginTelemetry",
                 deviceTelemetryLoginProduction,
 
                 {
