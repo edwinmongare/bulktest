@@ -334,7 +334,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
             104
           );
           const pressureDataFrameSendAnalysis =
-            (pressureDataFrameSend * 1) / 1000;
+            (pressureDataFrameSend) / 1000;
           // console.log("pressureDataFrameSend:", pressureDataFrameSend);
           // console.log("pressureDataFrameSendAnalysis:", pressureDataFrameSendAnalysis);
 
