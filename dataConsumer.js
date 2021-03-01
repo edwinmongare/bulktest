@@ -33,9 +33,8 @@ amqp.connect("amqp://localhost", function (error0, connection) {
 
           // ** intial payload Data frame 1 (send) message
           const intialPayloadDataFrameSend = Buffer.from(
-            msg.content,
-            "ascii"
-          ).toString("hex");
+            msg.content
+          ).toString();
           //console.log("dataframeLength", intialPayloadDataFrameSend.length);
 
           // ** start bit
