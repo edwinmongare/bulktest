@@ -35,6 +35,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
           const intialPayloadDataFrameSend = Buffer.from(
             msg.content
           ).toString();
+          console.log(intialPayloadDataFrameSend, "intialPayloadDataFrameSend");
           //console.log("dataframeLength", intialPayloadDataFrameSend.length);
 
           // ** start bit
@@ -424,7 +425,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
             //**  post to http endpoint
             axios
               .post(
-                "https://bahari2dev.azurewebsites.net/api/Admin/ZonalMeterTelemetry",
+                "https://tbahari2dev.azurewebsites.net/api/Admin/ZonalMeterTelemetry",
                 deviceTelemetryDataProduction,
                 {
                   headers: {
