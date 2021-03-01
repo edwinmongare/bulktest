@@ -17,9 +17,9 @@ amqp.connect("amqp://localhost", function (error0, connection) {
     if (error1) {
       throw error1;
     }
-    const queue = "dataframeQueue";
+    const queue = "dataframe";
     channel.assertQueue(queue, {
-      durable: false,
+      durable: true,
     });
     console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", queue);
 
