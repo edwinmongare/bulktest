@@ -419,13 +419,13 @@ amqp.connect("amqp://localhost", function (error0, connection) {
             "production data (data frame): ",
             deviceTelemetryDataProduction
           );
-          console.log(" [x] Received %s", msg.content.toString());
+          // console.log(" [x] Received %s", msg.content.toString());
 
           if (deviceTelemetryDataProduction) {
             //**  post to http endpoint
             axios
               .post(
-                "https://bahari2dev.azurewebsites.net/api/Admin/ZonalMeterTelemetry",
+                "https://tbahari2dev.azurewebsites.net/api/Admin/ZonalMeterTelemetry",
                 deviceTelemetryDataProduction,
                 {
                   headers: {
