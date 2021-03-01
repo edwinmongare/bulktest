@@ -17,9 +17,9 @@ amqp.connect("amqp://localhost", function (error0, connection) {
     if (error1) {
       throw error1;
     }
-    const queue = "loginframeQueue";
+    const queue = "loginframe";
     channel.assertQueue(queue, {
-      durable: false,
+      durable: true,
     });
     console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", queue);
 
@@ -31,10 +31,9 @@ amqp.connect("amqp://localhost", function (error0, connection) {
         } else {
           // ** intial payload Login Frame (send) message
 
-          const intialPayloadLoginFrameSend = Buffer.from(
-            msg.content,
-            "ascii"
-          ).toString("hex");
+          const intialPayloadLoginFrameSend = Buffer.from(msg.content).toString(
+            "hex"
+          );
           // console.log(intialPayloadLoginFrameSend.length);
           // ** start bit
           const startbitLoginFrameSend = header;
