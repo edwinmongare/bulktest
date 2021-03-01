@@ -75,9 +75,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
               }
             );
           } else if (messageData.slice(20, 22) == 08) {
-            let dataframereplyPart = Buffer.from(
-              messageData.slice(12, 13)
-            ).toString();
+            let dataframereplyPart = messageData.slice(24, 26);
             console.log(dataframereplyPart, "dataframereplyPart");
             let checkbit = dataframereplyPart.slice(1, 2);
             console.log(checkbit, "checkbit");
@@ -201,7 +199,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
           } else {
             console.log("msg slice not 01 or 08");
           }
-          console.log(" message sent to  :", msg, "message length", msg.length);
+          // console.log(" message sent to  :", msg, "message length", msg.length);
         }.bind(server[i])
       );
       server[i].bind(PORT + i, HOST);
